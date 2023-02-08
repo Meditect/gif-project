@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import DayliTrendsList from './components/dayli-trend-list';
+import DailyTrendsList from './components/daily-trend-list';
 
 import { ChakraProvider, theme } from '@chakra-ui/react';
 
@@ -18,7 +18,7 @@ function App() {
   return (
     <QueryClientProvider client={client}>
       <ChakraProvider theme={theme}>
-        <DayliTrendsList></DayliTrendsList>
+        <DailyTrendsList></DailyTrendsList>
       </ChakraProvider>
     </QueryClientProvider>
   );

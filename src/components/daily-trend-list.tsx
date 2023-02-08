@@ -3,8 +3,8 @@ import { useQuery } from "react-query";
 
 import { UnorderedList, ListItem } from '@chakra-ui/react';
 
-function DayliTrendsList(): JSX.Element {
-    const fetchTrends = async () => {
+function DailyTrendsList(): JSX.Element {
+    const fetchTrends= async () => {
       const response = await Axios.get(
         "http://localhost:3200"
       );
@@ -18,13 +18,13 @@ function DayliTrendsList(): JSX.Element {
   
     return (
       <div>
-        <h1>Dayli Trends :</h1>
+        <h1>Daily Trends :</h1>
   
         <UnorderedList>
-        {data.map((item: string) => {
-          console.log(item)
+        {data.map((item: any) => {
+          console.log(item.link)
           return (
-            <ListItem key={item}>{item}</ListItem>
+            <ListItem key={item.link}><a href={"https://trends.google.fr" + item.link}>{item.title}</a></ListItem>
           );
         })}
         </UnorderedList>
@@ -32,4 +32,4 @@ function DayliTrendsList(): JSX.Element {
     );
 }
 
-export default DayliTrendsList;
+export default DailyTrendsList;
