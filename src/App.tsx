@@ -6,6 +6,8 @@ import DailyTrendsList from './components/daily-trend-list';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 
 import { QueryClient, QueryClientProvider } from "react-query";
+// import Axios from "axios";
+// import { useQuery } from "react-query";
 
 function App() {
   const client = new QueryClient({
