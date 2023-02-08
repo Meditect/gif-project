@@ -1,16 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import Menu from './components/menu';
+import DayliTrendsList from './components/dayli-trend-list';
 
-import { ChakraProvider, theme, Heading, Text } from '@chakra-ui/react';
+import { ChakraProvider, theme } from '@chakra-ui/react';
+
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
   return (
-    <ChakraProvider theme={theme}>
-      <Menu></Menu>
-    </ChakraProvider>
+    <QueryClientProvider client={client}>
+      <ChakraProvider theme={theme}>
+        <DayliTrendsList></DayliTrendsList>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 
