@@ -1,43 +1,67 @@
 import Axios from "axios";
 import { useQuery } from "react-query";
 
-import { Card, CardBody, CardFooter, Image, Text, Heading, Stack, Button, Box, SimpleGrid } from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Text, Heading, Stack, Button, Box, SimpleGrid, Spinner } from '@chakra-ui/react';
+
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 
 function DailyTrendsList() {
 
   const fetchTrends = async () => {
-    const response = await Axios.get(
+    const trendsResponse = await Axios.get(
       "http://192.168.1.34:3200"
     );
-    return response.data;
+    const dailyTrends = trendsResponse.data;
+
+    for (var i = 0; i < dailyTrends.length; i -= -1) {
+      const gifResponse = await Axios.get(
+        "https://api.giphy.com/v1/gifs/search", { params: { api_key: "Fyj7bIDMXHpY7rFGCGE98dHiBVdaFEYV", q: dailyTrends[i].title, limit: 1, lang: 'fr' } }
+      );
+
+      const gifUrl = gifResponse.data.data[0].embed_url;
+
+      dailyTrends[i].gifUrl = gifUrl;
+    }
+
+    return dailyTrends;
   };
 
   const { data, isLoading, error } = useQuery("trends", fetchTrends);
 
-  if (isLoading) return <p>"Loading..."</p>;
-  if (error) return <p>"An error has occurred: " + error</p>;
+  if (isLoading){
+    return <div style={alertDiv}><Alert status='info'>
+            <Spinner color='blue.500' marginRight={3}/>
+            Loading data
+          </Alert>
+          </div>
+  }
+  if (error) {
+    return <div style={alertDiv}><Alert status='error'>
+              <AlertIcon />
+                Error while loading data
+            </Alert></div>
+  }
 
   return (
     <div>
-      <SimpleGrid minChildWidth='400px' spacingX='0px' spacingY='20px'>
+      <SimpleGrid minChildWidth='25%' spacingX='0px' spacingY='20px' marginLeft={5} marginRight={5}>
         {data.map((item: any, index: number) => {
-          console.log(item)
           return (
-            <Box>
-              <Card style={{ margin: "10px" }}
+            <Box key={item.title}>
+              <Card style={{height: "100%"}}
                 key={item.title}
                 direction={{ base: 'column', sm: 'row' }}
                 overflow='hidden'
                 variant='outline'
               >
 
-                <Image
-                  objectFit='cover'
-                  maxW={{ base: '100%', sm: '20%' }}
-                  maxH={{ base: '100%', sm: '40%' }}
-                  src='https://media1.giphy.com/media/Jcv1hzMf1LUnbfYYFm/giphy.gif?cid=ecf05e47dce4d853f2156f63b83d15e8386c546ea3c64ccf&rid=giphy.gif&ct=g'
-                  alt='Caffe Latte'
-                />
+                <iframe src={item.gifUrl}></iframe>
+
                 <Stack>
                   <CardBody>
                     <Heading size='md'>{index + 1} - {item.title}</Heading>
@@ -52,7 +76,7 @@ function DailyTrendsList() {
                       <a href={"https://trends.google.fr" + item.link} target="_blank">Explore</a>
                     </Button>
                     <Button colorScheme='teal' size='xs' marginLeft={2}>
-                      <a href="https://media1.giphy.com/media/Jcv1hzMf1LUnbfYYFm/giphy.gif?cid=ecf05e47dce4d853f2156f63b83d15e8386c546ea3c64ccf&rid=giphy.gif&ct=g" target="_blank">See gif</a>
+                      <a href={item.gifUrl} target="_blank">More gif</a>
                     </Button>
                   </CardFooter>
                 </Stack>
@@ -65,5 +89,14 @@ function DailyTrendsList() {
 
   );
 }
+
+const alertDiv = {
+  backgroundColor: "red",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginLeft: 50,
+  marginRight: 50
+};
 
 export default DailyTrendsList;
