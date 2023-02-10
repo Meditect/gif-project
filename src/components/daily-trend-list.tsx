@@ -1,14 +1,11 @@
 import Axios from "axios";
 import { useQuery } from "react-query";
 
-import { Card, CardBody, CardFooter, Text, Heading, Stack, Button, Box, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { SimpleGrid } from '@chakra-ui/react';
 
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-} from '@chakra-ui/react'
+import ListItem from './trend-list-item';
+import LoadingAlert from './loading-alert';
+import ErrorAlert from './error-alert';
 
 function DailyTrendsList() {
 
@@ -33,18 +30,11 @@ function DailyTrendsList() {
 
   const { data, isLoading, error } = useQuery("trends", fetchTrends);
 
-  if (isLoading){
-    return <div style={alertDiv}><Alert status='info'>
-            <Spinner color='blue.500' marginRight={3}/>
-            Loading data
-          </Alert>
-          </div>
+  if (isLoading) {
+    return <LoadingAlert></LoadingAlert>
   }
   if (error) {
-    return <div style={alertDiv}><Alert status='error'>
-              <AlertIcon />
-                Error while loading data
-            </Alert></div>
+    return <ErrorAlert></ErrorAlert>
   }
 
   return (
@@ -52,36 +42,7 @@ function DailyTrendsList() {
       <SimpleGrid minChildWidth='25%' spacingX='0px' spacingY='20px' marginLeft={5} marginRight={5}>
         {data.map((item: any, index: number) => {
           return (
-            <Box key={item.title}>
-              <Card style={{height: "100%"}}
-                key={item.title}
-                direction={{ base: 'column', sm: 'row' }}
-                overflow='hidden'
-                variant='outline'
-              >
-
-                <iframe src={item.gifUrl}></iframe>
-
-                <Stack>
-                  <CardBody>
-                    <Heading size='md'>{index + 1} - {item.title}</Heading>
-
-                    <Text py='2'>
-                      {item.nbSearch} research
-                    </Text>
-                  </CardBody>
-
-                  <CardFooter >
-                    <Button variant='solid' colorScheme='blue' size='xs'>
-                      <a href={"https://trends.google.fr" + item.link} target="_blank">Explore</a>
-                    </Button>
-                    <Button colorScheme='teal' size='xs' marginLeft={2}>
-                      <a href={item.gifUrl} target="_blank">More gif</a>
-                    </Button>
-                  </CardFooter>
-                </Stack>
-              </Card>
-            </Box>
+            <ListItem key={index} item={item} index={index}></ListItem>
           );
         })}
       </SimpleGrid>
@@ -89,14 +50,5 @@ function DailyTrendsList() {
 
   );
 }
-
-const alertDiv = {
-  backgroundColor: "red",
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginLeft: 50,
-  marginRight: 50
-};
 
 export default DailyTrendsList;
