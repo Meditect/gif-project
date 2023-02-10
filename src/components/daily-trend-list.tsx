@@ -7,20 +7,23 @@ import ListItem from './trend-list-item';
 import LoadingAlert from './loading-alert';
 import ErrorAlert from './error-alert';
 
-function DailyTrendsList() {
-
+function DailyTrendsList(props: {countryValue: any}) {
+  
   const fetchTrends = async () => {
+
     const trendsResponse = await Axios.get(
-      "http://192.168.1.34:3200"
+      "http://192.168.1.34:3200/" + props.countryValue
     );
+
     const dailyTrends = trendsResponse.data;
 
     for (var i = 0; i < dailyTrends.length; i -= -1) {
       const gifResponse = await Axios.get(
-        "https://api.giphy.com/v1/gifs/search", { params: { api_key: "Fyj7bIDMXHpY7rFGCGE98dHiBVdaFEYV", q: dailyTrends[i].title, limit: 1, lang: 'fr' } }
+        "https://api.giphy.com/v1/gifs/search", { params: { api_key: "Fyj7bIDMXHpY7rFGCGE98dHiBVdaFEYV", q: dailyTrends[i] ? dailyTrends[i].title : "not found", limit: 1, lang: props.countryValue } }
       );
 
-      const gifUrl = gifResponse.data.data[0].embed_url;
+      let gifUrl: string
+      gifResponse.data.data.length > 0 ? gifUrl = gifResponse.data.data[0].embed_url : gifUrl = 'https://giphy.com/embed/26xBIygOcC3bAWg3S'
 
       dailyTrends[i].gifUrl = gifUrl;
     }
@@ -34,6 +37,7 @@ function DailyTrendsList() {
     return <LoadingAlert></LoadingAlert>
   }
   if (error) {
+    console.log(error)
     return <ErrorAlert></ErrorAlert>
   }
 
