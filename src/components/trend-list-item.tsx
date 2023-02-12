@@ -58,7 +58,7 @@ function CustomModal(item: any) {
 
     const fetchGifs = async () => {
         const gifsResponse = await Axios.get(
-            "https://api.giphy.com/v1/gifs/search", { params: { api_key: "Fyj7bIDMXHpY7rFGCGE98dHiBVdaFEYV", q: item.item.title ? item.item.title : "not found", limit: 10, lang: item.geo } }
+            "https://api.giphy.com/v1/gifs/search", { params: { api_key: process.env.REACT_APP_GIPHY_API_KEY, q: item.item.title ? item.item.title : "not found", limit: 10, lang: item.geo } }
         );
         return gifsResponse.data.data;
     };
