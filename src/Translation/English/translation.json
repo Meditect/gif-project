@@ -4,5 +4,7 @@
     "more": "More gif",
     "explore": "Explore",
     "close": "Close",
-    "related": "Gifs related to"
+    "related": "Gifs related to",
+    "http-error": "Error while loading data",
+    "http-loading": "Loading data..."
 }

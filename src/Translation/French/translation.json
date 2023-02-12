@@ -4,5 +4,7 @@
     "more" : "Plus de gifs",
     "explore": "Visiter",
     "close": "Fermer",
-    "related": "Gifs en lien avec"
+    "related": "Gifs en lien avec",
+    "http-error": "Erreur lors du chargement des données",
+    "http-loading": "Chargement des données..."
 }

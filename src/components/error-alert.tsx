@@ -1,16 +1,17 @@
 import {
     Alert, AlertIcon,
 } from '@chakra-ui/react'
-
-import { Spinner } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 function ErrorAlert() {
+
+    const { t, i18n } = useTranslation();
 
     return (
         <div style={alertDiv}>
             <Alert status='error'>
                 <AlertIcon />
-                Error while loading data
+                {t("http-error")}
             </Alert>
         </div>
     );

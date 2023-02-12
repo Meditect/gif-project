@@ -33,10 +33,10 @@ function Home() {
                     backgroundColor="white">
                     <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
                         <HStack alignItems={"center"} spacing={4}>
-                            <IconButton
+                            <a href="."><IconButton
                                 variant="ghost"
                                 icon={<FiTrendingUp fontSize="1.25rem" />}
-                                aria-label="Open Menu" />
+                                aria-label="Open Menu" /></a>
                             <Heading size='md'>{t("title")} ({countryValue})</Heading>
                         </HStack>
                         <Select onChange={handleSetSelectedOptions} variant="outline" maxWidth={"20%"}>

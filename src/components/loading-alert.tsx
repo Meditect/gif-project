@@ -3,14 +3,17 @@ import {
 } from '@chakra-ui/react'
 
 import { Spinner } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 function LoadingAlert() {
+
+    const { t, i18n } = useTranslation();
 
     return (
         <div style={alertDiv}>
             <Alert status='info'>
                 <Spinner color='blue.500' marginRight={3} />
-                Loading data
+                {t("http-loading")}
             </Alert>
         </div>
     );
