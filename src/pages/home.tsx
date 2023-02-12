@@ -1,12 +1,11 @@
-import { Flex, Heading, Select, Box, HStack, IconButton, useMediaQuery } from '@chakra-ui/react';
-
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiTrendingUp } from 'react-icons/fi';
 
+import { Flex, Heading, Select, Box, HStack, IconButton, useMediaQuery } from '@chakra-ui/react';
+
 import DailyTrendsList from '../components/daily-trend-list';
-import { useState } from 'react';
-
-
+import CustomFooter from '../components/custom-footer';
 
 function Home() {
 
@@ -22,7 +21,7 @@ function Home() {
     const [isMobile] = useMediaQuery("(max-width: 768px)")
 
     return (
-        <>
+        <div style={{position: "relative", minHeight: "100%", display: "flex", flexDirection: "column"}}>
             <div>
                 <Box
                     px={4}
@@ -49,7 +48,7 @@ function Home() {
             <div style={{ marginTop: "2%" }}>
                 <DailyTrendsList key={countryValue} countryValue={countryValue}></DailyTrendsList>
             </div>
-        </>
+        </div>
     );
 };
 

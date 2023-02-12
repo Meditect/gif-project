@@ -5,6 +5,7 @@ import { ChakraProvider, theme } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Home from './pages/home';
+import CustomFooter from './components/custom-footer';
 
 function App() {
 
@@ -17,11 +18,12 @@ function App() {
   });
 
   return (
-    <QueryClientProvider client={client}>
-      <ChakraProvider theme={theme}>
-        <Home></Home>
-      </ChakraProvider>
-    </QueryClientProvider>
+      <QueryClientProvider client={client}>
+        <ChakraProvider theme={theme}>
+          <Home></Home>
+          <CustomFooter></CustomFooter>
+        </ChakraProvider>
+      </QueryClientProvider>
   );
 }
 
