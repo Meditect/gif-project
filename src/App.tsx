@@ -34,8 +34,8 @@ function App() {
       <ChakraProvider theme={theme}>
         <NavBar></NavBar>
         <Select onChange={handleSetSelectedOptions} variant="outline">
-          <option value='FR'>France</option>
-          <option value='US'>United States</option>
+          <option value='FR'>🇫🇷 France</option>
+          <option value='US'>🇺🇸 United States</option>
         </Select>
         <Flex
           as="nav"
