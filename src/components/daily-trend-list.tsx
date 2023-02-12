@@ -7,6 +7,10 @@ import ListItem from './trend-list-item';
 import LoadingAlert from './loading-alert';
 import ErrorAlert from './error-alert';
 
+import { withTranslation } from 'react-i18next';
+
+const MyComponent = withTranslation()(ListItem)
+
 function DailyTrendsList(props: {countryValue: any}) {
   
   const fetchTrends = async () => {
@@ -46,7 +50,7 @@ function DailyTrendsList(props: {countryValue: any}) {
       <SimpleGrid minChildWidth='25%' spacingX='0px' spacingY='20px' marginLeft={5} marginRight={5}>
         {data.map((item: any, index: number) => {
           return (
-            <ListItem key={index} item={item} index={index} geo={props.countryValue}></ListItem>
+            <MyComponent key={index} item={item} index={index} geo={props.countryValue}></MyComponent>
           )
         })}
       </SimpleGrid>

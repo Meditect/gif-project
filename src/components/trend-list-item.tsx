@@ -6,14 +6,18 @@ import Axios from "axios";
 import { useQuery } from "react-query";
 import LoadingAlert from './loading-alert';
 import ErrorAlert from './error-alert';
+import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
-class ListItem extends React.Component<{ item: any, index: number, geo: string }> {
+class ListItem extends React.Component<{ item: any, index: number, geo: string, t: any }> {
 
     constructor(props: any) {
         super(props);
     }
 
     render() {
+
+        const { t } = this.props;
 
         return (
             <Box>
@@ -30,13 +34,13 @@ class ListItem extends React.Component<{ item: any, index: number, geo: string }
                             <Heading size='md'>{this.props.index + 1} - {this.props.item.title}</Heading>
 
                             <Text py='2'>
-                                {this.props.item.nbSearch} research
+                                {this.props.item.nbSearch} {t('search')}
                             </Text>
                         </CardBody>
 
                         <CardFooter >
                             <Button variant='solid' colorScheme='blue' size='xs'>
-                                <a href={"https://trends.google.fr" + this.props.item.link} target="_blank">Explore</a>
+                                <a href={"https://trends.google.fr" + this.props.item.link} target="_blank">{t('explore')}</a>
                             </Button>
                             <CustomModal key={this.props.item.title} item={this.props.item} geo={this.props.geo}></CustomModal>
                         </CardFooter>
@@ -50,10 +54,11 @@ class ListItem extends React.Component<{ item: any, index: number, geo: string }
 function CustomModal(item: any) {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { t, i18n } = useTranslation();
 
     const fetchGifs = async () => {
         const gifsResponse = await Axios.get(
-                "https://api.giphy.com/v1/gifs/search", { params: { api_key: "Fyj7bIDMXHpY7rFGCGE98dHiBVdaFEYV", q: item.item.title ? item.item.title : "not found", limit: 10, lang: item.geo } }
+            "https://api.giphy.com/v1/gifs/search", { params: { api_key: "Fyj7bIDMXHpY7rFGCGE98dHiBVdaFEYV", q: item.item.title ? item.item.title : "not found", limit: 10, lang: item.geo } }
         );
         return gifsResponse.data.data;
     };
@@ -69,7 +74,7 @@ function CustomModal(item: any) {
 
     useEffect(() => {
         refetch();
-      }, [value, refetch]);
+    }, [value, refetch]);
 
     if (isLoading) {
         return <LoadingAlert></LoadingAlert>
@@ -81,17 +86,17 @@ function CustomModal(item: any) {
 
     const open = () => {
         onOpen();
-        setValue(prevValue => prevValue + 1 );
-        setValue(prevValue => prevValue + 1 );
+        setValue(prevValue => prevValue + 1);
+        setValue(prevValue => prevValue + 1);
     };
-    
+
     return (
         <>
-            <Button colorScheme='teal' size='xs' marginLeft={2} onClick={open}>More gif
+            <Button colorScheme='teal' size='xs' marginLeft={2} onClick={open}>{t("more")}
                 <Modal isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>Gifs related to {item.item.title}</ModalHeader>
+                        <ModalHeader>{t('related')} {item.item.title}</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             {isOpen && data.map((gif: any, index: number) => {
@@ -104,7 +109,7 @@ function CustomModal(item: any) {
                         </ModalBody>
                         <ModalFooter>
                             <Button colorScheme='teal' size='xs' onClick={onClose}>
-                                Close
+                                {t('close')}
                             </Button>
                         </ModalFooter>
                     </ModalContent>
