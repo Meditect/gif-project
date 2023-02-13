@@ -28,7 +28,7 @@ function DailyTrendsList(props: {countryValue: any}) {
         dailyTrends[i].title = dailyTrends[i].title.slice(0,20);
       }
       const gifResponse = await Axios.get(
-        "https://api.giphy.com/v1/gifs/search", { params: { api_key: process.env.REACT_APP_GIPHY_API_KEY, q: dailyTrends[i] ? dailyTrends[i].title : "not found", limit: 1, lang: props.countryValue } }
+        "https://api.giphy.com/v1/gifs/search", { params: { api_key: "Fyj7bIDMXHpY7rFGCGE98dHiBVdaFEYV", q: dailyTrends[i] ? dailyTrends[i].title : "not found", limit: 1, lang: props.countryValue } }
       );
 
       let gifUrl: string
