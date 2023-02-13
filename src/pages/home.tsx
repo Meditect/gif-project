@@ -5,14 +5,13 @@ import { FiTrendingUp } from 'react-icons/fi';
 import { Flex, Heading, Select, Box, HStack, IconButton, useMediaQuery } from '@chakra-ui/react';
 
 import DailyTrendsList from '../components/daily-trend-list';
-import CustomFooter from '../components/custom-footer';
 
 function Home() {
 
     const [countryValue, setCountryValue] = useState('FR');
     const { t, i18n } = useTranslation();
 
-    const handleSetSelectedOptions = (e: any) => {
+    const handleSetSelectedOptions = async (e: any) => {
         const newValue = e.target.value;
         i18n.changeLanguage(newValue.toLowerCase());
         setCountryValue(newValue);

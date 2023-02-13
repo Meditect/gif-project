@@ -22,6 +22,9 @@ function DailyTrendsList(props: {countryValue: any}) {
     const dailyTrends = trendsResponse.data;
 
     for (var i = 0; i < dailyTrends.length; i -= -1) {
+      if(dailyTrends[i].title.length>20){
+        dailyTrends[i].title = dailyTrends[i].title.slice(0,20);
+      }
       const gifResponse = await Axios.get(
         "https://api.giphy.com/v1/gifs/search", { params: { api_key: process.env.REACT_APP_GIPHY_API_KEY, q: dailyTrends[i] ? dailyTrends[i].title : "not found", limit: 1, lang: props.countryValue } }
       );

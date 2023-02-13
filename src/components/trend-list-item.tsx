@@ -87,7 +87,6 @@ function CustomModal(item: any) {
     const open = () => {
         onOpen();
         setValue(prevValue => prevValue + 1);
-        setValue(prevValue => prevValue + 1);
     };
 
     return (
