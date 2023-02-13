@@ -6,8 +6,8 @@ function CustomFooter() {
 
     const { t, i18n } = useTranslation();
 
-    function changeColor(e: any) {
-        e.target.style.color == 'blue' ? e.target.style.color = 'black' : e.target.style.color = 'blue';
+    function changeUnderline(e: any) {
+        e.target.style.textDecoration == 'underline' ? e.target.style.textDecoration = 'none' : e.target.style.textDecoration = 'underline';
     }
 
     return (
@@ -18,10 +18,10 @@ function CustomFooter() {
                 top={0}
                 boxShadow={"md"}
                 zIndex={2}
-                backgroundColor="white">
+                backgroundColor="var(--chakra-colors-teal-500)">
                 <Flex h={16} alignItems={"center"} justifyContent={"center"}>
-                    <Heading as='h6' size='xs'>
-                        {t("footer-text")} <a href="https://github.com/HenriGourgue" target="_blank" style={styles.textStyle} onMouseOver={changeColor} onMouseLeave={changeColor}>Henri GOURGUE</a>
+                    <Heading as='h6' size='xs' color={"white"}>
+                        {t("footer-text")} <a href="https://github.com/HenriGourgue" target="_blank" onMouseOver={changeUnderline} onMouseLeave={changeUnderline}>Henri GOURGUE</a>
                     </Heading>
                 </Flex>
             </Box>
@@ -30,16 +30,5 @@ function CustomFooter() {
 
 
 };
-
-const styles = {
-    textStyle: {
-        textDecorationLine: 'underline',
-    },
-    footerStyle: {
-        position: "absolute",
-        bottom: 0,
-        width: "100%"
-    }
-}
 
 export default CustomFooter;

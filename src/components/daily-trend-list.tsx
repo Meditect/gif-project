@@ -13,7 +13,7 @@ const MyComponent = withTranslation()(ListItem)
 
 function DailyTrendsList(props: {countryValue: any}) {
 
-  const [isMobile] = useMediaQuery("(max-width: 768px)");
+  const [isMobile] = useMediaQuery("(max-width: 1200px)");
   
   const fetchTrends = async () => {
 

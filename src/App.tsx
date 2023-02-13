@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import { ChakraProvider, theme } from '@chakra-ui/react';
+import { ChakraProvider, Container, theme } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import Home from './pages/home';
@@ -18,12 +18,18 @@ function App() {
   });
 
   return (
-      <QueryClientProvider client={client}>
-        <ChakraProvider theme={theme}>
-          <Home></Home>
-          <CustomFooter></CustomFooter>
-        </ChakraProvider>
-      </QueryClientProvider>
+    <QueryClientProvider client={client}>
+      <ChakraProvider theme={theme}>
+        <div id="app">
+          <div className="home">
+            <Home></Home>
+          </div>
+          <div className="footer">
+            <CustomFooter></CustomFooter>
+          </div>
+        </div>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 
