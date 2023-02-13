@@ -38,8 +38,8 @@ function Home() {
                             <Heading size='md'>{t("title")} ({countryValue})</Heading>
                         </HStack>
                         <Select onChange={handleSetSelectedOptions} variant="outline" maxWidth={"20%"}>
-                            <option value='FR'>🇫🇷 France</option>
-                            <option value='US'>🇺🇸 United States</option>
+                            <option value='FR'>{isMobile && '🇫🇷'}{!isMobile && '🇫🇷 France'}</option>
+                            <option value='US'>{isMobile && '🇺🇸'}{!isMobile && '🇺🇸 United States'}</option>
                         </Select>
                     </Flex>
                 </Box>

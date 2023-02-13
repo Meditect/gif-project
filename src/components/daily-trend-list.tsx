@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { useQuery } from "react-query";
 
-import { SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid, useMediaQuery } from '@chakra-ui/react';
 
 import ListItem from './trend-list-item';
 import LoadingAlert from './loading-alert';
@@ -12,6 +12,8 @@ import { withTranslation } from 'react-i18next';
 const MyComponent = withTranslation()(ListItem)
 
 function DailyTrendsList(props: {countryValue: any}) {
+
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
   
   const fetchTrends = async () => {
 
@@ -48,9 +50,12 @@ function DailyTrendsList(props: {countryValue: any}) {
     return <ErrorAlert></ErrorAlert>
   }
 
+  const minMax = isMobile ? "100%" : "33%";
+
   return (
     <div>
-      <SimpleGrid minChildWidth='25%' spacingX='0px' spacingY='20px' marginLeft={5} marginRight={5}>
+      {/* <SimpleGrid minChildWidth='25%' spacingX='0px' spacingY='20px' marginLeft={5} marginRight={5}> */}
+      <SimpleGrid spacing={3} templateColumns={'repeat(auto-fill, minmax(' + minMax + ', 1fr))'}>
         {data.map((item: any, index: number) => {
           return (
             <MyComponent key={index} item={item} index={index} geo={props.countryValue}></MyComponent>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Card, CardBody, CardFooter, Text, Heading, Stack, Button, Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Text, Heading, Stack, Button, Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useMediaQuery, SimpleGrid } from '@chakra-ui/react';
 
 import Axios from "axios";
 import { useQuery } from "react-query";
@@ -9,6 +9,7 @@ import ErrorAlert from './error-alert';
 import { withTranslation } from 'react-i18next';
 import { useTranslation } from 'react-i18next';
 
+
 class ListItem extends React.Component<{ item: any, index: number, geo: string, t: any }> {
 
     constructor(props: any) {
@@ -16,6 +17,8 @@ class ListItem extends React.Component<{ item: any, index: number, geo: string, 
     }
 
     render() {
+
+
 
         const { t } = this.props;
 
@@ -30,7 +33,7 @@ class ListItem extends React.Component<{ item: any, index: number, geo: string, 
                     <iframe src={this.props.item.gifUrl}></iframe>
 
                     <Stack>
-                        <CardBody>
+                        <CardBody width={"100%"}>
                             <Heading size='md'>{this.props.index + 1} - {this.props.item.title}</Heading>
 
                             <Text py='2'>
@@ -53,12 +56,14 @@ class ListItem extends React.Component<{ item: any, index: number, geo: string, 
 
 function CustomModal(item: any) {
 
+    const [isMobile] = useMediaQuery("(max-width: 768px)");
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { t, i18n } = useTranslation();
 
     const fetchGifs = async () => {
         const gifsResponse = await Axios.get(
-            "https://api.giphy.com/v1/gifs/search", { params: { api_key: process.env.REACT_APP_GIPHY_API_KEY, q: item.item.title ? item.item.title : "not found", limit: 10, lang: item.geo } }
+            "https://api.giphy.com/v1/gifs/search", { params: { api_key: process.env.REACT_APP_GIPHY_API_KEY, q: item.item.title ? item.item.title : "not found", limit: 25, lang: item.geo } }
         );
         return gifsResponse.data.data;
     };
@@ -89,22 +94,33 @@ function CustomModal(item: any) {
         setValue(prevValue => prevValue + 1);
     };
 
+    const minMax = isMobile ? "33%" : "10%";
+
     return (
         <>
             <Button colorScheme='teal' size='xs' marginLeft={2} onClick={open}>{t("more")}
-                <Modal isOpen={isOpen} onClose={onClose}>
+                <Modal isOpen={isOpen} onClose={onClose} size={'full'}>
                     <ModalOverlay />
                     <ModalContent>
                         <ModalHeader>{t('related')} {item.item.title}</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            {isOpen && data.map((gif: any, index: number) => {
-                                return (
-                                    <>
-                                        <iframe key={gif.id + String(index)} src={gif.embed_url}></iframe>
-                                    </>
-                                )
-                            })}
+                            <SimpleGrid spacing={3} templateColumns={'repeat(auto-fill, minmax(' + minMax + ', 1fr))'}>
+                                {isOpen && data.map((gif: any, index: number) => {
+                                    return (
+
+                                        <Box textAlign={"center"} justifyContent={"center"}>
+                                            <Card style={{ height: "100%" }}
+                                                direction={{ base: 'column', sm: 'row' }}
+                                                overflow='hidden'
+                                                variant='outline'
+                                            >
+                                                <iframe width={"100%"} key={gif.id + String(index)} src={gif.embed_url}></iframe>
+                                            </Card>
+                                        </Box>
+                                    )
+                                })}
+                            </SimpleGrid>
                         </ModalBody>
                         <ModalFooter>
                             <Button colorScheme='teal' size='xs' onClick={onClose}>
