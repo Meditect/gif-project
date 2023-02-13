@@ -17,7 +17,9 @@ function Home() {
         setCountryValue(newValue);
     }
 
-    const [isMobile] = useMediaQuery("(max-width: 768px)")
+    const [isMobile] = useMediaQuery("(max-width: 810px)")
+
+    const test = isMobile ? "25%" : "15%";
 
     return (
         <div style={{position: "relative", minHeight: "100%", display: "flex", flexDirection: "column"}}>
@@ -37,14 +39,14 @@ function Home() {
                                 aria-label="Open Menu" /></a>
                             <Heading size='md'>{t("title")} ({countryValue})</Heading>
                         </HStack>
-                        <Select onChange={handleSetSelectedOptions} variant="outline" maxWidth={"20%"}>
+                        <Select onChange={handleSetSelectedOptions} variant="outline" size={"sm"}>
                             <option value='FR'>{isMobile && '🇫🇷'}{!isMobile && '🇫🇷 France'}</option>
                             <option value='US'>{isMobile && '🇺🇸'}{!isMobile && '🇺🇸 United States'}</option>
                         </Select>
                     </Flex>
                 </Box>
             </div>
-            <div style={{ marginTop: "2%" }}>
+            <div style={{ padding: "1%"}}>
                 <DailyTrendsList key={countryValue} countryValue={countryValue}></DailyTrendsList>
             </div>
         </div>
