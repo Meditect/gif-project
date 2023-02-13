@@ -18,6 +18,8 @@ class ListItem extends React.Component<{ item: any, index: number, geo: string, 
 
     render() {
 
+
+
         const { t } = this.props;
 
         return (
@@ -40,7 +42,7 @@ class ListItem extends React.Component<{ item: any, index: number, geo: string, 
                         </CardBody>
 
                         <CardFooter >
-                            <Button variant='solid' colorScheme='blue' size='md'>
+                            <Button variant='solid' colorScheme='blue' size='xs'>
                                 <a href={"https://trends.google.fr" + this.props.item.link} target="_blank">{t('explore')}</a>
                             </Button>
                             <CustomModal key={this.props.item.title} item={this.props.item} geo={this.props.geo}></CustomModal>
@@ -54,7 +56,7 @@ class ListItem extends React.Component<{ item: any, index: number, geo: string, 
 
 function CustomModal(item: any) {
 
-    const [isMobile] = useMediaQuery("(max-width: 810px)");
+    const [isMobile] = useMediaQuery("(max-width: 768px)");
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { t, i18n } = useTranslation();
@@ -92,18 +94,18 @@ function CustomModal(item: any) {
         setValue(prevValue => prevValue + 1);
     };
 
-    const minMax = isMobile ? "33%" : "33%";
+    const minMax = isMobile ? "33%" : "10%";
 
     return (
         <>
-            <Button colorScheme='teal' size='md' marginLeft={2} onClick={open}>{t("more")}
+            <Button colorScheme='teal' size='xs' marginLeft={2} onClick={open}>{t("more")}
                 <Modal isOpen={isOpen} onClose={onClose} size={'full'}>
                     <ModalOverlay />
                     <ModalContent>
                         <ModalHeader>{t('related')} {item.item.title}</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <SimpleGrid spacing={3} templateColumns={'repeat(auto-fill, minmax(33%, 1fr))'}>
+                            <SimpleGrid spacing={3} templateColumns={'repeat(auto-fill, minmax(' + minMax + ', 1fr))'}>
                                 {isOpen && data.map((gif: any, index: number) => {
                                     return (
 
@@ -121,7 +123,7 @@ function CustomModal(item: any) {
                             </SimpleGrid>
                         </ModalBody>
                         <ModalFooter>
-                            <Button colorScheme='teal' size='md' onClick={onClose}>
+                            <Button colorScheme='teal' size='xs' onClick={onClose}>
                                 {t('close')}
                             </Button>
                         </ModalFooter>
