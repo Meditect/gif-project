@@ -18,7 +18,7 @@ function DailyTrendsList(props: {countryValue: any}) {
   const fetchTrends = async () => {
 
     const trendsResponse = await Axios.get(
-      "http://192.168.1.34:3200/" + props.countryValue
+      "http://server.rednoise.xyz:3200/" + props.countryValue
     );
 
     const dailyTrends = trendsResponse.data;
